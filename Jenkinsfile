@@ -2,8 +2,6 @@
  * TFM integration tests
  */
 
-@Library('mbed-os-ci@tfm-standalone') _
-
 properties([
         buildDiscarder(
                 logRotator(artifactDaysToKeepStr: '',
