@@ -2,6 +2,8 @@
  * TFM integration tests
  */
 
+@Library('mbed-os-ci@tfm-standalone') _
+
 properties([
         buildDiscarder(
                 logRotator(artifactDaysToKeepStr: '',
@@ -27,7 +29,10 @@ properties([
 
 echo "Starting job"
 println(env.getEnvironment())
-/*
+this_fork = "saheerb/mbed-os-tf-m-regression-tests"
+this_topic = github.getCurrentBranch()
+pr_head_sha = github.getPrHeadSha()
+
 def testTFM() {
     tfm.testIntegration(
         Eval.me(params.targets_toolchains_build),
@@ -41,23 +46,23 @@ def testTFM() {
         s3.getDefaultBucket(),
         "['default_target':'']",
         "",
-        params.test_repo_fork,
-        params.test_repo_topic
+        this_fork,
+        this_topic
     )
 }
 
 // results_url adds link to testReport on Greentea currentBuild.description
 def results_url = "${env.BUILD_URL}testReport/"
-def GITHUB_BRANCH_ID = github.getBranchId(params.mbed_os_topic)
+def GITHUB_BRANCH_ID = github.getBranchId(this_topic)
 def s3_logs_url = "${GITHUB_BRANCH_ID}/${env.BUILD_NUMBER}/${env.JOB_NAME}"
 cipipeline.setBuildDetails(params.mbed_os_fork, params.mbed_os_topic, GITHUB_BRANCH_ID, s3_logs_url, s3.getDefaultBucket(), results_url)
 github.executeWithGithubReporting(this.&testTFM, 
                                   params.github_title, 
                                   env.JOB_URL, 
                                   "", 
-                                  params.mbed_os_fork, 
-                                  params.mbed_os_topic, 
-                                  params.pr_head_sha, 
+                                  this_fork, 
+                                  this_topic, 
+                                  pr_head_sha, 
                                   true
                                   )
-*/
+
