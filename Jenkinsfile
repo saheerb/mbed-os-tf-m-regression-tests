@@ -29,7 +29,10 @@ echo "Starting job"
 println(env.getEnvironment())
 this_fork = "saheerb/mbed-os-tf-m-regression-tests"
 this_topic = github.getCurrentBranch()
+println(this_topic)
 pr_head_sha = github.getPrHeadSha()
+println(pr_head_sha)
+
 
 def testTFM() {
     tfm.testIntegration(
@@ -54,6 +57,7 @@ def results_url = "${env.BUILD_URL}testReport/"
 def GITHUB_BRANCH_ID = github.getBranchId(this_topic)
 def s3_logs_url = "${GITHUB_BRANCH_ID}/${env.BUILD_NUMBER}/${env.JOB_NAME}"
 cipipeline.setBuildDetails(params.mbed_os_fork, params.mbed_os_topic, GITHUB_BRANCH_ID, s3_logs_url, s3.getDefaultBucket(), results_url)
+println("Starting build")
 github.executeWithGithubReporting(this.&testTFM, 
                                   params.github_title, 
                                   env.JOB_URL, 
