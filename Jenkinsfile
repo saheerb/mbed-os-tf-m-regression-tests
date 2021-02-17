@@ -54,11 +54,8 @@ utils.prettyPrintMap("params in branch job are",params)
 mbed.run_job([
         subBuildsPostfix         : "-tfm-standalone",
         enableGithubComment      : true,
-        s3_upload_bucket         : s3Bucket,
-        setProperties            : false,
-        enableprOpenedByCheck    : false,
         targets_toolchains_build : params.targets_toolchains_build,
-        targets_toolchains_build : params.targets_toolchains_test,
+        targets_toolchains_test  : params.targets_toolchains_test,
         current_fork             : this_fork,
         current_topic            : this_topic,
         mbed_os_fork             : params.mbed_os_fork,
