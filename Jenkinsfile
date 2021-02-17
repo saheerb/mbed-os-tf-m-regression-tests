@@ -52,7 +52,7 @@ utils.prettyPrintMap("params in branch job are",params)
 //def arr = params.mbed_os_ci_topic.tokenize('/')
 
 mbed.run_job([
-        subBuildsPostfix         : "-tfm",
+        subBuildsPostfix         : "-tfm-standalone",
         enableGithubComment      : true,
         s3_upload_bucket         : s3Bucket,
         setProperties            : false,
