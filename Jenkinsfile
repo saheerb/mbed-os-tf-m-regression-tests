@@ -38,7 +38,7 @@ utils.prettyPrintMap("params in branch job are",params)
 
 /* Do the setup operations */
 stage("setup") {
-    cipipeline.cinode(label: "all-in-one-build-slave", timeout: 5400) {
+    cipipeline.cinode(label: "ci_general_utility", timeout: 1800) {
             def gitHubBranchId = github.getBranchId(params.mbed_os_topic)
             def s3Bucket = s3.getDefaultBucket()
             def s3BasePath = s3.getBasePath()
