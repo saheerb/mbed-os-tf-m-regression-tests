@@ -20,7 +20,7 @@ properties([
                 defaultValue: params.mbed_os_fork ?: 'ARMmbed/mbed-os',
                 description: 'If fork specify the organization part in https://github.com/{mbed_os_fork}'),
             string(name: 'mbed_os_topic',
-                defaultValue: params.mbed_os_topic ?: 'master',
+                defaultValue: params.mbed_os_topic ?: 'feature-tf-m-1.2-integration',
                 description: 'specify the branch of mbed-os in test'),
             booleanParam(name: 'run_rebase',
                 defaultValue: params.run_rebase ?: false,
