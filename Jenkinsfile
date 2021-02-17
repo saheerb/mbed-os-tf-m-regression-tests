@@ -47,9 +47,9 @@ println(pr_head_sha)
 
 
 utils.prettyPrintMap("params in branch job are",params)
-env.FORK_NAME = params.mbed_os_fork_name  //"ARMmbed/mbed-os"
-env.BRANCH_NAME = params.mbed_os_branch_name // "master"
-def arr = params.mbed_os_ci_topic.tokenize('/')
+//env.FORK_NAME = params.mbed_os_fork_name  //"ARMmbed/mbed-os"
+//env.BRANCH_NAME = params.mbed_os_branch_name // "master"
+//def arr = params.mbed_os_ci_topic.tokenize('/')
 
 mbed.run_job([
         subBuildsPostfix         : "-tfm",
