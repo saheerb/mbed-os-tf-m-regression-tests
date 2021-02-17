@@ -61,6 +61,9 @@ mbed.run_job([
         targets_toolchains_build : params.targets_toolchains_test,
         current_fork             : this_fork,
         current_topic            : this_topic,
+        mbed_os_fork             : params.mbed_os_fork,
+        mbed_os_topic            : params.mbed_os_topic,
+        run_rebase               : params.run_rebase
 ])
 
 
