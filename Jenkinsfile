@@ -11,10 +11,10 @@ properties([
         [$class: 'ThrottleJobProperty', categories: ['ci_secure-targets'], limitOneJobWithMatchingParams: false, maxConcurrentPerNode: 0, maxConcurrentTotal: 0, paramsToUseForLimit: '', throttleEnabled: true, throttleOption: 'category'],
         parameters([
             string(name: 'targets_toolchains_build',
-                defaultValue:  "['ARM_MUSCA_S1':['GNUARM'], 'ARM_MUSCA_B1':['GNUARM']]",
+                defaultValue:  '["ARM_MUSCA_S1":["GNUARM"], "ARM_MUSCA_B1":["GNUARM"]]',
                 description: 'Map of target and toolchains to build'),
             string(name: 'targets_toolchains_test',
-                defaultValue: "['ARM_MUSCA_S1':['GNUARM']]",
+                defaultValue: '["ARM_MUSCA_S1":["GNUARM"]]',
                 description: 'Map of target and toolchains to test. This must be subset of targets_toolchains_build'),
             string(name: 'mbed_os_fork',
                 defaultValue: 'ARMmbed/mbed-os',
