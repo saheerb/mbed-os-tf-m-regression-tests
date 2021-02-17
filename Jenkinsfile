@@ -35,8 +35,24 @@ github_title = env.JOB_NAME
 upstreamBuildNumber = env.BUILD_NUMBER
 s3UploadName = env.JOB_NAME
 jobTitle = env.JOB_NAME
+gitHubBranchId = github.getBranchId(params.mbed_os_topic)
+s3Bucket = s3.getDefaultBucket()
+s3BasePath = s3.getBasePath()
 println(pr_head_sha)
 
+stage("setup") {
+    cipipeline.cinode(label: "all-in-one-build-slave", timeout: 5400) {
+            def s3SourcePath = "${s3BasePath}/sources/${gitHubBranchId}/${upstreamBuildNumber}/sources.tar.gz"
+            dir("mbed-os-tf-m-regression-tests"){
+                checkout scm
+                sh "ls"
+                sh "git clone https://github.com/${params.mbed_os_fork}.git -b ${params.mbed_os_topic}"
+            }
+            sh "tar -czf sources.tar.gz mbed-os-tf-m-regression-tests --exclude-vcs"
+            // upload source
+            s3.upload("sources.tar.gz", s3SourcePath, s3Bucket, "eu-west-1")
+    }
+}
 
 def testTFM() {
     tfm.testIntegration(
@@ -46,7 +62,7 @@ def testTFM() {
         params.mbed_os_fork,
         params.mbed_os_topic,
         s3UploadName,
-        s3.getBasePath(),
+        s3BasePath,
         true, // s3 upload or not 
         s3.getDefaultBucket(),
         "['default_target':'']",
@@ -58,8 +74,7 @@ def testTFM() {
 
 // results_url adds link to testReport on Greentea currentBuild.description
 def results_url = "${env.BUILD_URL}testReport/"
-def GITHUB_BRANCH_ID = github.getBranchId(params.mbed_os_topic)
-def s3_logs_url = "${GITHUB_BRANCH_ID}/${upstreamBuildNumber}/${s3UploadName}"
-cipipeline.setBuildDetails(this_fork, this_topic, GITHUB_BRANCH_ID, s3_logs_url, s3.getDefaultBucket(), results_url)
+def s3_logs_url = "${gitHubBranchId}/${upstreamBuildNumber}/${s3UploadName}"
+cipipeline.setBuildDetails(this_fork, this_topic, gitHubBranchId, s3_logs_url, s3Bucket, results_url)
 println("Starting build")
 this.testTFM()
