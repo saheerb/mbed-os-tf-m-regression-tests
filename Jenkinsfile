@@ -59,8 +59,8 @@ def testTFM() {
 // results_url adds link to testReport on Greentea currentBuild.description
 def results_url = "${env.BUILD_URL}testReport/"
 def GITHUB_BRANCH_ID = github.getBranchId(this_topic)
-def s3_logs_url = "${GITHUB_BRANCH_ID}/${env.BUILD_NUMBER}/${env.JOB_NAME}"
-cipipeline.setBuildDetails(params.mbed_os_fork, params.mbed_os_topic, GITHUB_BRANCH_ID, s3_logs_url, s3.getDefaultBucket(), results_url)
+def s3_logs_url = "${GITHUB_BRANCH_ID}/${upstreamBuildNumber}/${s3UploadName}"
+cipipeline.setBuildDetails(this_fork, this_topic, GITHUB_BRANCH_ID, s3_logs_url, s3.getDefaultBucket(), results_url)
 println("Starting build")
 this.testTFM()
 /*
