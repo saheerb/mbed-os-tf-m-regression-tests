@@ -42,6 +42,7 @@ stage("setup") {
             def gitHubBranchId = github.getBranchId(params.mbed_os_topic)
             def s3Bucket = s3.getDefaultBucket()
             def s3BasePath = s3.getBasePath()
+            def upstreamBuildNumber = env.BUILD_NUMBER
             def s3SourcePath = "${s3BasePath}/sources/${gitHubBranchId}/${upstreamBuildNumber}/sources.tar.gz"
             dir("mbed-os-tf-m-regression-tests"){
                 checkout scm
@@ -66,7 +67,8 @@ mbed.run_job([
         current_topic            : this_topic,
         mbed_os_fork             : params.mbed_os_fork,
         mbed_os_topic            : params.mbed_os_topic,
-        run_rebase               : params.run_rebase
+        run_rebase               : params.run_rebase,
+        checkout                 : null
 ])
 
 
