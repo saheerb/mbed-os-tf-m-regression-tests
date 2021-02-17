@@ -59,8 +59,8 @@ mbed.run_job([
         enableprOpenedByCheck    : false,
         targets_toolchains_build : params.targets_toolchains_build,
         targets_toolchains_build : params.targets_toolchains_test,
-        mbed_os_ci_base          : params.mbed_os_ci_base,
-        this_repo_topic          : params.mbed_os_ci_topic,
+        current_fork             : this_fork,
+        current_topic            : this_topic,
 ])
 
 
