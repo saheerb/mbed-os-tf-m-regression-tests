@@ -31,6 +31,10 @@ this_fork = "saheerb/mbed-os-tf-m-regression-tests"
 this_topic = github.getCurrentBranch()
 println(this_topic)
 pr_head_sha = github.getPrHeadSha()
+github_title = env.JOB_NAME
+upstreamBuildNumber = env.BUILD_NUMBER
+s3UploadName = env.JOB_NAME
+jobTitle = env.JOB_NAME
 println(pr_head_sha)
 
 
@@ -38,15 +42,15 @@ def testTFM() {
     tfm.testIntegration(
         Eval.me(params.targets_toolchains_build),
         Eval.me(params.targets_toolchains_test),
-        env.BUILD_NUMBER,
+        upstreamBuildNumber,
         params.mbed_os_fork,
         params.mbed_os_topic,
-        env.JOB_NAME,
+        s3UploadName,
         s3.getBasePath(),
-        true,
+        true, // s3 upload or not 
         s3.getDefaultBucket(),
         "['default_target':'']",
-        "",
+        false, // is this mbed-os sub
         this_fork,
         this_topic
     )
@@ -59,11 +63,11 @@ def s3_logs_url = "${GITHUB_BRANCH_ID}/${env.BUILD_NUMBER}/${env.JOB_NAME}"
 cipipeline.setBuildDetails(params.mbed_os_fork, params.mbed_os_topic, GITHUB_BRANCH_ID, s3_logs_url, s3.getDefaultBucket(), results_url)
 println("Starting build")
 github.executeWithGithubReporting(this.&testTFM, 
-                                  params.github_title, 
+                                  jobTitle, 
                                   env.JOB_URL, 
                                   "", 
                                   this_fork, 
-                                  this_topic, 
+                                  this_topic,
                                   pr_head_sha, 
                                   true
                                   )
