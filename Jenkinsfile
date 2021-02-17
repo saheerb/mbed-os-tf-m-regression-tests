@@ -22,7 +22,7 @@ properties([
             string(name: 'mbed_os_topic',
                 defaultValue: params.mbed_os_topic ?: 'master',
                 description: 'specify the branch of mbed-os in test'),
-            booleanParam(name: 'mbed_os_topic',
+            booleanParam(name: 'run_rebase',
                 defaultValue: params.run_rebase ?: false,
                 description: 'specify whether to run rebase script')
         ])
