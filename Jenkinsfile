@@ -11,19 +11,19 @@ properties([
         [$class: 'ThrottleJobProperty', categories: ['ci_secure-targets'], limitOneJobWithMatchingParams: false, maxConcurrentPerNode: 0, maxConcurrentTotal: 0, paramsToUseForLimit: '', throttleEnabled: true, throttleOption: 'category'],
         parameters([
             string(name: 'targets_toolchains_build',
-                defaultValue:  params.targets_toolchains_build ?: "['ARM_MUSCA_S1':['GNUARM'], 'ARM_MUSCA_B1':['GNUARM']]",
+                defaultValue:  "['ARM_MUSCA_S1':['GNUARM'], 'ARM_MUSCA_B1':['GNUARM']]",
                 description: 'Map of target and toolchains to build'),
             string(name: 'targets_toolchains_test',
-                defaultValue: params.targets_toolchains_test ?: "['ARM_MUSCA_S1':['GNUARM']]",
+                defaultValue: "['ARM_MUSCA_S1':['GNUARM']]",
                 description: 'Map of target and toolchains to test. This must be subset of targets_toolchains_build'),
             string(name: 'mbed_os_fork',
-                defaultValue: params.mbed_os_fork ?: 'ARMmbed/mbed-os',
+                defaultValue: 'ARMmbed/mbed-os',
                 description: 'If fork specify the organization part in https://github.com/{mbed_os_fork}'),
             string(name: 'mbed_os_topic',
-                defaultValue: params.mbed_os_topic ?: 'feature-tf-m-1.2-integration',
+                defaultValue: 'feature-tf-m-1.2-integration',
                 description: 'specify the branch of mbed-os in test'),
             booleanParam(name: 'run_rebase',
-                defaultValue: params.run_rebase ?: false,
+                defaultValue: false,
                 description: 'specify whether to run rebase script')
         ])
 ])
