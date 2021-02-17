@@ -22,6 +22,9 @@ properties([
             string(name: 'mbed_os_topic',
                 defaultValue: 'master',
                 description: 'specify the branch of mbed-os in test'),
+            string(name: 'config',
+                defaultValue: '-tfm-build-and-test',
+                description: 'act as a config option'),
             booleanParam(name: 'run_rebase',
                 defaultValue: false,
                 description: 'specify whether to run rebase script')
@@ -59,7 +62,7 @@ stage("setup") {
 
 
 mbed.run_job([
-        subBuildsPostfix         : "-tfm-standalone",
+        subBuildsPostfix         : params.config,
         enableGithubComment      : true,
         targets_toolchains_build : params.targets_toolchains_build,
         targets_toolchains_test  : params.targets_toolchains_test,
