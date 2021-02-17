@@ -68,6 +68,7 @@ mbed.run_job([
         mbed_os_fork             : params.mbed_os_fork,
         mbed_os_topic            : params.mbed_os_topic,
         run_rebase               : params.run_rebase,
+        isPropagate              : false,
         checkout                 : null
 ])
 
