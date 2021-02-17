@@ -21,7 +21,7 @@ properties([
                 description: 'If fork specify the organization part in https://github.com/{mbed_os_fork}'),
             string(name: 'mbed_os_topic',
                 defaultValue: params.mbed_os_topic ?: 'master',
-                description: 'specify the branch of mbed-os in test')
+                description: 'specify the branch of mbed-os in test'),
             BooleanParameterValue(name: 'mbed_os_topic',
                 defaultValue: params.run_rebase ?: false,
                 description: 'specify whether to run rebase script')
