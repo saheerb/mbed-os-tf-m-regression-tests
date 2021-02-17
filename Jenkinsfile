@@ -29,27 +29,33 @@ properties([
 ])
 
 echo "Starting job"
-
-echo "Starting job"
 println(env.getEnvironment())
+/* TODO: set to wherever the current fork is */
 this_fork = "saheerb/mbed-os-tf-m-regression-tests"
 this_topic = github.getCurrentBranch()
-println(this_topic)
-pr_head_sha = github.getPrHeadSha()
-github_title = env.JOB_NAME
-upstreamBuildNumber = env.BUILD_NUMBER
-s3UploadName = env.JOB_NAME
-jobTitle = env.JOB_NAME
-gitHubBranchId = github.getBranchId(params.mbed_os_topic)
-s3Bucket = s3.getDefaultBucket()
-s3BasePath = s3.getBasePath()
-println(pr_head_sha)
-
 
 utils.prettyPrintMap("params in branch job are",params)
-//env.FORK_NAME = params.mbed_os_fork_name  //"ARMmbed/mbed-os"
-//env.BRANCH_NAME = params.mbed_os_branch_name // "master"
-//def arr = params.mbed_os_ci_topic.tokenize('/')
+
+/* Do the setup operations */
+stage("setup") {
+    cipipeline.cinode(label: "all-in-one-build-slave", timeout: 5400) {
+            def gitHubBranchId = github.getBranchId(params.mbed_os_topic)
+            def s3Bucket = s3.getDefaultBucket()
+            def s3BasePath = s3.getBasePath()
+            def s3SourcePath = "${s3BasePath}/sources/${gitHubBranchId}/${upstreamBuildNumber}/sources.tar.gz"
+            dir("mbed-os-tf-m-regression-tests"){
+                checkout scm
+                sh "git clone https://github.com/${params.mbed_os_fork}.git -b ${params.mbed_os_topic}"
+                /* If rebase needed execute that */
+                if (params.run_rebase) {
+                }
+            }
+            sh "tar -czf sources.tar.gz mbed-os-tf-m-regression-tests --exclude-vcs"
+            // upload source
+            s3.upload("sources.tar.gz", s3SourcePath, s3Bucket, "eu-west-1")
+    }
+}
+
 
 mbed.run_job([
         subBuildsPostfix         : "-tfm-standalone",
