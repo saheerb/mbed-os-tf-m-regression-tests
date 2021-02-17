@@ -62,6 +62,8 @@ def GITHUB_BRANCH_ID = github.getBranchId(this_topic)
 def s3_logs_url = "${GITHUB_BRANCH_ID}/${env.BUILD_NUMBER}/${env.JOB_NAME}"
 cipipeline.setBuildDetails(params.mbed_os_fork, params.mbed_os_topic, GITHUB_BRANCH_ID, s3_logs_url, s3.getDefaultBucket(), results_url)
 println("Starting build")
+this.testTFM()
+/*
 github.executeWithGithubReporting(this.&testTFM, 
                                   jobTitle, 
                                   env.JOB_URL, 
@@ -73,4 +75,5 @@ github.executeWithGithubReporting(this.&testTFM,
                                   "jenkins-ci",
                                   "199340ac-e4a4-4ee6-8ef5-2275c96b1f41"
                                   )
+*/
 
