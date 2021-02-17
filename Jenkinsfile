@@ -22,6 +22,9 @@ properties([
             string(name: 'mbed_os_topic',
                 defaultValue: params.mbed_os_topic ?: 'master',
                 description: 'specify the branch of mbed-os in test')
+            BooleanParameterValue(name: 'mbed_os_topic',
+                defaultValue: params.run_rebase ?: false,
+                description: 'specify whether to run rebase script')
         ])
 ])
 
@@ -68,7 +71,8 @@ def testTFM() {
         "['default_target':'']",
         false, // is this mbed-os sub
         this_fork,
-        this_topic
+        this_topic,
+        params.run_rebase
     )
 }
 
