@@ -2,6 +2,13 @@
  * TFM integration tests
  */
 
+library identifier: 'mbed-os-ci@master',
+    retriever: modernSCM([
+      $class: 'GitSCMSource',
+      credentialsId: 'b40e9021-f946-4feb-ac25-5a343649e878',
+      remote: 'https://github.com/ARMmbed/mbed-os-ci.git'
+])
+
 properties([
         buildDiscarder(
                 logRotator(artifactDaysToKeepStr: '',
@@ -30,18 +37,11 @@ properties([
 
 echo "Starting job"
 println(env.getEnvironment())
-this_fork = "saheerb/mbed-os-tf-m-regression-tests"
-this_topic = github.getCurrentBranch()
-println(this_topic)
-pr_head_sha = github.getPrHeadSha()
-github_title = env.JOB_NAME
 upstreamBuildNumber = env.BUILD_NUMBER
 s3UploadName = env.JOB_NAME
-jobTitle = env.JOB_NAME
 gitHubBranchId = github.getBranchId(params.mbed_os_topic)
 s3Bucket = s3.getDefaultBucket()
 s3BasePath = s3.getBasePath()
-println(pr_head_sha)
 
 stage("setup") {
     cipipeline.cinode(label: "all-in-one-build-slave", timeout: 5400) {
@@ -70,8 +70,8 @@ def testTFM() {
         s3.getDefaultBucket(),
         "['default_target':'']",
         false, // is this mbed-os sub
-        this_fork,
-        this_topic,
+        "",
+        "",
         params.run_rebase
     )
 }
