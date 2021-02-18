@@ -23,9 +23,9 @@ properties([
                 defaultValue: 'master',
                 description: 'specify the branch of mbed-os in test'),
             choice(name: 'config',
-                 defaultValue: '-tfm-build-and-test',
-                 choices: ['-tfm-build-and-test', '-tfm-build-only'], 
-                 description: 'config choices - basically sub job selection'),
+                 defaultValue: '-tfm-standalone',
+                 choices: ['-tfm-standalone', '-tfm-minimal'], 
+                 description: 'config choices - basically sub job selection. minimal does not run test sub job'),
             booleanParam(name: 'run_rebase',
                 defaultValue: false,
                 description: 'specify whether to run rebase script')
