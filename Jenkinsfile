@@ -42,6 +42,8 @@ s3UploadName = env.JOB_NAME
 gitHubBranchId = github.getBranchId(params.mbed_os_topic)
 s3Bucket = s3.getDefaultBucket()
 s3BasePath = s3.getBasePath()
+this_fork = "saheerb/mbed-os-tf-m-regression-tests"	
+this_topic = github.getCurrentBranch()
 
 stage("setup") {
     cipipeline.cinode(label: "all-in-one-build-slave", timeout: 5400) {
