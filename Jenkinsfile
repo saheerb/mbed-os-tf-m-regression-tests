@@ -22,9 +22,10 @@ properties([
             string(name: 'mbed_os_topic',
                 defaultValue: 'master',
                 description: 'specify the branch of mbed-os in test'),
-            string(name: 'config',
-                defaultValue: '-tfm-build-and-test',
-                description: 'act as a config option'),
+            choice(name: 'config',
+                 defaultValue: '-tfm-build-and-test'
+                 choices: ['-tfm-build-and-test', '-tfm-build-only'], 
+                 description: 'config choices - basically sub job selection'),
             booleanParam(name: 'run_rebase',
                 defaultValue: false,
                 description: 'specify whether to run rebase script')
